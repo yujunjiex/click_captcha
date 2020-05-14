@@ -22,8 +22,8 @@ correct = 0
 random.shuffle(images)
 for image_name in random.sample(images, sample_count):
     _, unicode_name = image_name[:-4].split('_')
-    TRAIN_PATH = os.path.join(TRAIN_PATH, image_name)  # 图片地址
-    img = mpimg.imread(TRAIN_PATH)
+    image_path = os.path.join(TRAIN_PATH, image_name)  # 图片地址
+    img = mpimg.imread(image_path)
     plt.imshow(img)
     plt.pause(0.001)  # 给到事件绘制时间
     select_char = input("该图片内的文字是否是 '{}' ?(y or n): ".format((r'\u' + unicode_name).encode().decode('unicode_escape')))
