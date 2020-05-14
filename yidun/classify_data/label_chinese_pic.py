@@ -10,9 +10,12 @@ import os
 from matplotlib import pyplot as plt
 import matplotlib.image as mpimg
 plt.ion()  # 开启交互模式
-IMAGE_BASE_PATH = './crop_images/'
+TRAIN_PATH = './crop_images/'
 
-images = os.listdir(IMAGE_BASE_PATH)
+images = os.listdir(TRAIN_PATH)
+print('说明：1.图片内的汉字可能并不在提示的三个字符里，这种情况仍要输入.\n'
+      '\t2.当图片内没有文字或者无法识别，输入空格后回车跳过.\n'
+      '\t3.程序可随时停止，标记到哪下次就从哪开始')
 for image_name in images:
     _, *unicode_names = image_name[:-4].split('_')
     if len(unicode_names) == 1:  # 表示已标记
@@ -20,20 +23,20 @@ for image_name in images:
     tip_chars = []
     for unicode_name in unicode_names:
         tip_chars.append((r'\u' + unicode_name).encode().decode('unicode_escape'))
-    image_path = os.path.join(IMAGE_BASE_PATH, image_name)  # 图片地址
-    img = mpimg.imread(image_path)
+    TRAIN_PATH = os.path.join(TRAIN_PATH, image_name)  # 图片地址
+    img = mpimg.imread(TRAIN_PATH)
     plt.imshow(img)
     plt.pause(0.001)  # 给到事件绘制时间
     char = input('请输入该图片中的汉字(提示:{})：'.format(tip_chars))
     assert len(char) == 1, '只能输入一个汉字.'
     if char == ' ':  # 脏数据直接删除
-        os.remove(image_path)
+        os.remove(TRAIN_PATH)
         print('已删除.')
     else:
         input_unicode_char = char.encode('unicode_escape').decode()[2:]
         print(char, input_unicode_char, f'图片时间戳:{image_name[:13]}')
-        os.rename(image_path,
-                  os.path.join(IMAGE_BASE_PATH, f'{image_name[:13]}_{input_unicode_char}.jpg'))
+        os.rename(TRAIN_PATH,
+                  os.path.join(TRAIN_PATH, f'{image_name[:13]}_{input_unicode_char}.jpg'))
     plt.close()
 
 
