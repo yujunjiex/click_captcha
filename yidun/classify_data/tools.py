@@ -42,6 +42,7 @@ def move_to_valid(count=300):
 
 
 def generator_train_list(train_file_path='./train.list', train_image_path='classify_data/crop_images/'):
+    """生成train.list"""
     global TRAIN_PATH
     images = os.listdir(TRAIN_PATH)
     images.remove('.gitignore')
@@ -52,6 +53,7 @@ def generator_train_list(train_file_path='./train.list', train_image_path='class
 
 
 def generator_valid_list(valid_file_path='./valid.list', valid_image_path='classify_data/valid/'):
+    """生成valid.list"""
     global VALID_PATH
     images = os.listdir(VALID_PATH)
     images.remove('.gitignore')
@@ -59,6 +61,34 @@ def generator_valid_list(valid_file_path='./valid.list', valid_image_path='class
     with open(valid_file_path, 'w+') as f:
         for image_name in images:
             f.write('{}\n'.format(valid_image_path + image_name))
+
+
+def generator_classify_image_txt():
+    """生成chinese_classify_image.txt"""
+    files = os.listdir('./images')
+    files.remove('.gitignore')
+
+    with open('./chinese_classify_image.txt', 'w+') as f:
+        for file_name in files:
+            f.write('classify_data/images/{}\n'.format(file_name))
+
+
+def generator_classify_labels_txt():
+    """生成labels.txt"""
+    global TRAIN_PATH
+    images = os.listdir(TRAIN_PATH)
+    images.remove('.gitignore')
+
+    words = set()
+    for image_name in images:
+        _, unicode_name = image_name[:-4].split('_')
+        words.add(unicode_name)
+
+    print(len(words))
+    print(words)
+    with open('./labels.txt', 'w+') as f:
+        for word in words:
+            f.write('{}\n'.format(word))
 
 
 if __name__ == '__main__':
