@@ -14,7 +14,7 @@ def change_images_name_to_unicode():
     images.remove('.gitignore')
 
     for image_name in images:
-        unicode_list = [_s.encode('unicode_escape').decode()[2:] for _s in image_name[13:-4]]
+        unicode_list = [_s.encode('unicode_escape').decode()[1:] for _s in image_name[13:-4]]
         new_name = '_'.join([image_name[:13]] + unicode_list) + '.jpg'
         new_path = os.path.join(TRAIN_PATH, new_name)
         old_path = os.path.join(TRAIN_PATH, image_name)
@@ -24,7 +24,7 @@ def change_images_name_to_unicode():
     # # decode
     # _, *unicode_names = new_path[:-4].split('_')
     # for unicode_name in unicode_names:
-    #     print((r'\u' + unicode_name).encode().decode('unicode_escape'))
+    #     print(('\\' + unicode_name).encode().decode('unicode_escape'))
 
 
 def move_to_valid(count=300):
@@ -94,3 +94,4 @@ def generator_classify_labels_txt():
 if __name__ == '__main__':
     generator_train_list()
     generator_valid_list()
+    generator_classify_labels_txt()

@@ -26,7 +26,7 @@ for image_name in random.sample(images, sample_count):
     img = mpimg.imread(image_path)
     plt.imshow(img)
     plt.pause(0.001)  # 给到事件绘制时间
-    select_char = input("该图片内的文字是否是 '{}' ?(y or n): ".format((r'\u' + unicode_name).encode().decode('unicode_escape')))
+    select_char = input("该图片内的文字是否是 '{}' ?(y or n): ".format(('\\' + unicode_name).encode().decode('unicode_escape')))
     plt.close()
     if select_char.lower() == 'n':
         continue

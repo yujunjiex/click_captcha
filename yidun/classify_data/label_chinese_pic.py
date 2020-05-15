@@ -22,7 +22,7 @@ for image_name in images:
         continue
     tip_chars = []
     for unicode_name in unicode_names:
-        tip_chars.append((r'\u' + unicode_name).encode().decode('unicode_escape'))
+        tip_chars.append(('\\' + unicode_name).encode().decode('unicode_escape'))
     image_path = os.path.join(TRAIN_PATH, image_name)  # 图片地址
     img = mpimg.imread(image_path)
     plt.imshow(img)
@@ -33,7 +33,7 @@ for image_name in images:
         os.remove(TRAIN_PATH)
         print('已删除.')
     else:
-        input_unicode_char = char.encode('unicode_escape').decode()[2:]
+        input_unicode_char = char.encode('unicode_escape').decode()[1:]
         print(char, input_unicode_char, f'图片时间戳:{image_name[:13]}')
         os.rename(image_path,
                   os.path.join(TRAIN_PATH, f'{image_name[:13]}_{input_unicode_char}.jpg'))
