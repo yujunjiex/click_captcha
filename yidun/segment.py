@@ -26,8 +26,8 @@ def seg_one_img(img_path, rets):
             d = y + (w / 2)
             try:
                 chinese_char = img.crop((a, b, c, d))
-                # 将截取的图片规范化为65*65*3
-                normal_img = chinese_char.resize((65, 65), resample=Image.BICUBIC)
+                # 将截取的图片规范化为64*64*3
+                normal_img = chinese_char.resize((64, 64), resample=Image.BICUBIC)
                 # img_path[-18:-4]表示易盾的中文名，用来在标注时提供一些备选字
                 path = './classify_data/crop_images/{}_{}.jpg'.format(get_ms_timestamp(), img_path[-18:-4])
                 print(path)
